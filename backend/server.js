@@ -11,10 +11,12 @@ const port = process.env.port || 5000;
 app.use(cors);
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
+// const uri = process.env.ATLAS_URI;
+// mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
+const url = "mongodb://localhost/mern_tut";
+mongoose.connect(url);
 const connection = mongoose.connection;
-connection.once("open", () => {
+connection.on("open", () => {
   console.log("MongoDB database connection established securely.");
 });
 
