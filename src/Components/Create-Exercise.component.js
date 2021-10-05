@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 // import { Link } from "react-router-dom";
 
 class CreateExercise extends Component {
@@ -85,13 +87,16 @@ class CreateExercise extends Component {
           <div className="form-group">
             <label>Date</label>
             <div>
-              {/* <DatePicker selected={this.state.date} onChange={this.onChange} /> */}
-              <input
+              <ReactDatePicker
+                selected={this.state.date}
+                onChange={this.onChange}
+              />
+              {/* <input
                 type="date"
                 name="date"
                 selected={this.state.date}
                 onChange={this.onChange}
-              />
+              /> */}
             </div>
           </div>
           <div className="form-group">
