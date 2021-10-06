@@ -27,4 +27,34 @@ router.route("/add").post((req, res) => {
     .catch((err) => res.json("Error: " + err));
 });
 
+router.route("/:id").delete((req, res) => {
+  Exercise.findById(req.params.id).then(() => {
+    res.json("Exercise deleted ").catch((err) => {
+      re.status(400).res.json("Err:" + err);
+    });
+  });
+});
+
+router.route("/update/:id").post((req, res) => {
+  Exercise.findById(req.params.id)
+    .then((exercise) => {
+      exercise.username = req.params.username;
+      exercise.description = req.params.description;
+      exercise.duration = Number(req.params.duration);
+      exercise.date = Date.parse(req.params.date);
+
+      exercise
+        .save()
+        .then(() => {
+          res.json("Exercise updated");
+        })
+        .catch((err) => {
+          res.json("Error: " + err);
+        });
+    })
+    .catch((err) => {
+      res.json("Error: " + err);
+    });
+});
+
 module.exports = router;
