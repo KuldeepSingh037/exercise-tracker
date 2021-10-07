@@ -11,10 +11,13 @@ app.use(cors);
 
 const uri = process.env.ATLAS_URI;
 
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Database Connected"))
+  .catch((err) => console.log("My eerror: " + err));
 
 const connection = mongoose.connection;
 connection.once("open", () => {
