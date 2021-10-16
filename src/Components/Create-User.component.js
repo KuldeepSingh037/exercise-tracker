@@ -7,23 +7,27 @@ class CreateUser extends Component {
     this.state = {
       username: "",
     };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onChange(e) {
+  handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
     const user = {
       username: this.state.username,
     };
     console.log(user);
-    axios.post("http://localhost:5000/users/add", user).then((res) => {
-      console.log(res.data);
-    });
+    try {
+      axios.post("http://localhost:5000/users/add", user).then((res) => {
+        console.log(res.data);
+      });
+    } catch (err) {
+      console.log("error occurredsss: " + err);
+    }
 
     this.setState({
       username: "",
@@ -34,14 +38,14 @@ class CreateUser extends Component {
     return (
       <div>
         <h3>Create New User</h3>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Username:&nbsp;</label>
             <input
               type="text"
               required
               className="form-control"
-              onChange={this.onChange}
+              onChange={this.handleChange}
               name="username"
               value={this.state.username}
             />

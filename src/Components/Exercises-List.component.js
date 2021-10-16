@@ -23,7 +23,7 @@ class ExercisesList extends Component {
     this.deleteExercise = this.deleteExercise.bind(this);
   }
   componentDidMount() {
-    axios.get("http://localhost:exercises/").then((res) => {
+    axios.get("http://localhost:5000/exercises/").then((res) => {
       this.setState({ exercises: res.data }).catch((error) =>
         console.log(error)
       );
@@ -32,7 +32,7 @@ class ExercisesList extends Component {
 
   deleteExercise(id) {
     axios
-      .delete("http://localhost:execises/" + id)
+      .delete("http://localhost:5000/execises/" + id)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
 
