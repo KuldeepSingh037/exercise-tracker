@@ -104,14 +104,9 @@ class CreateExercise extends Component {
                 selected={this.state.date}
                 onChange={this.onChangeDate}
               />
-              {/* <input
-                type="date"
-                name="date"
-                selected={this.state.date}
-                onChange={this.onChange}
-              /> */}
             </div>
           </div>
+          <br />
           <div className="form-group">
             <input
               type="submit"

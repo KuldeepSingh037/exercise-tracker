@@ -26,7 +26,7 @@ class CreateUser extends Component {
         console.log(res.data);
       });
     } catch (err) {
-      console.log("error occurredsss: " + err);
+      console.log("error occurred: " + err);
     }
 
     this.setState({
