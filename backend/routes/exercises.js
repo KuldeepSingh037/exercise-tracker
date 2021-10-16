@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 let Exercise = require("../models/exercise.model");
 
 router.route("/").get((req, res) => {
@@ -23,8 +22,8 @@ router.route("/add").post((req, res) => {
 
   newExercise
     .save()
-    .then(() => res.json("Exercise added"))
-    .catch((err) => res.json("Error: " + err));
+    .then(() => res.json("Exercise added!"))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 router.route("/:id").delete((req, res) => {

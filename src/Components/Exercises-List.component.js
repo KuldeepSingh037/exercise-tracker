@@ -3,36 +3,48 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Exercise = (props) => {
-  <tr>
-    <td>{props.exercise.username}</td>
-    <td>{props.exercise.description}</td>
-    <td>{props.exercise.duration}</td>
-    <td>{props.exercise.date.substring(0, 10)}</td>
-    <td>
-      <Link to={"/edit/" + props.exercise._id}>edit</Link> |
-    </td>
-  </tr>;
+  return (
+    <tr>
+      <td>{props.exercise.username}</td>
+      <td>{props.exercise.description}</td>
+      <td>{props.exercise.duration}</td>
+      <td>{props.exercise.date.substring(0, 10)}</td>
+      <td>
+        <Link to={"/edit/" + props.exercise._id}>edit</Link> |{" "}
+        <a
+          href="#"
+          onClick={() => {
+            props.deleteExercise(props.exercise._id);
+          }}
+        >
+          delete
+        </a>
+      </td>
+    </tr>
+  );
 };
 
-class ExercisesList extends Component {
+export default class ExercisesList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      exercises: [],
-    };
+    this.state = { exercises: [] };
     this.deleteExercise = this.deleteExercise.bind(this);
   }
+
   componentDidMount() {
-    axios.get("http://localhost:5000/exercises/").then((res) => {
-      this.setState({ exercises: res.data }).catch((error) =>
-        console.log(error)
-      );
-    });
+    axios
+      .get("http://localhost:5000/exercises/")
+      .then((res) => {
+        this.setState({ exercises: res.data });
+      })
+      .catch((error) => {
+        console.log("Error: " + error);
+      });
   }
 
   deleteExercise(id) {
     axios
-      .delete("http://localhost:5000/execises/" + id)
+      .delete("http://localhost:5000/exercises/" + id)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
 
@@ -45,9 +57,9 @@ class ExercisesList extends Component {
     return this.state.exercises.map((currentExercise) => {
       return (
         <Exercise
+          key={currentExercise._id}
           exercise={currentExercise}
           deleteExercise={this.deleteExercise}
-          key={currentExercise._id}
         />
       );
     });
@@ -64,7 +76,7 @@ class ExercisesList extends Component {
               <th>Description</th>
               <th>Duration</th>
               <th>Date</th>
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>{this.exerciseList()}</tbody>
@@ -73,5 +85,3 @@ class ExercisesList extends Component {
     );
   }
 }
-
-export default ExercisesList;

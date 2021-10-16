@@ -8,7 +8,7 @@ const userSchema = new Schema(
       required: true,
       unique: true,
       trim: true,
-      minlength: 3,
+      minlength: 2,
     },
   },
   {
@@ -16,4 +16,5 @@ const userSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+module.exports = User;
