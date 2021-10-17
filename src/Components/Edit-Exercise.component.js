@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import { Link } from "react-router-dom";
 
 class EditExercise extends Component {
   constructor(props) {
@@ -14,8 +13,8 @@ class EditExercise extends Component {
       date: new Date(),
       users: [],
     };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.handleChange.bind(this);
+    this.onSubmit = this.handleSubmit.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
   }
 
@@ -30,25 +29,38 @@ class EditExercise extends Component {
           date: new Date(res.data.date),
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(
+      this.state.username,
+      this.state.description,
+      this.state.duration,
+      this.state.date
+    );
 
-    axios.get("http://localhost:5000/users/").then((res) => {
-      if (res.data.length > 0) {
-        this.setState({
-          users: res.data.map((user) => user.username),
-        });
-      }
-    });
+    axios
+      .get("http://localhost:5000/users/")
+      .then((res) => {
+        if (res.data.length > 0) {
+          this.setState({
+            users: res.data.map((user) => user.username),
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("Error: " + err);
+      });
   }
 
-  onChange(e) {
+  handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
   onChangeDate(date) {
     this.setState({ date: date });
   }
-  onSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
     const exercise = {
       username: this.state.username,
@@ -56,31 +68,30 @@ class EditExercise extends Component {
       duration: this.state.duration,
       date: this.state.date,
     };
-    // console.log(exercise);
+    console.log(exercise);
     axios
       .post(
-        "http://localhost:5000/exercises/update" + this.props.match.params.id,
+        "http://localhost:5000/exercises/update/" + this.props.match.params.id,
         exercise
       )
-      .then((res) => {
-        console.log(res.data);
-      });
-    // window.location = "/";
+      .then((res) => console.log(res.data));
+    window.location = "/";
   }
+
   render() {
     return (
       <div>
         <h3>Edit Exercise Log</h3>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Username:</label>
             <select
-              // ref="userInput"
+              //  ref="userInput"
               required
               name="username"
               className="form-control"
               value={this.state.username}
-              onChange={this.onChange}
+              onChange={this.handleChange}
             >
               {this.state.users.map((user) => {
                 return (
@@ -92,29 +103,29 @@ class EditExercise extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label>Description</label>
+            <label>Description: </label>
             <input
               type="text"
               required
               name="description"
               className="form-control"
               value={this.state.description}
-              onChange={this.onChange}
+              onChange={this.handleChange}
             />
           </div>
           <div className="form-group">
-            <label>Duration</label>
+            <label>Duration (in minutes)</label>
             <input
               type="text"
               required
               name="duration"
               className="form-control"
               value={this.state.duration}
-              onChange={this.onChange}
+              onChange={this.handleChange}
             />
           </div>
           <div className="form-group">
-            <label>Date</label>
+            <label>Date: </label>
             <div>
               <DatePicker
                 selected={this.state.date}
