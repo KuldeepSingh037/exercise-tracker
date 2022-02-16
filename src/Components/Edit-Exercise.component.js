@@ -9,35 +9,32 @@ class EditExercise extends Component {
     this.state = {
       username: "",
       description: "",
-      duration: 0,
+      duration: new Number(),
       date: new Date(),
       users: [],
     };
-    this.onChange = this.handleChange.bind(this);
-    this.onSubmit = this.handleSubmit.bind(this);
-    this.onChangeDate = this.onChangeDate.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onDateChange = this.onDateChange.bind(this);
   }
 
   componentDidMount() {
     axios
       .get("http://localhost:5000/exercises/" + this.props.match.params.id)
       .then((res) => {
-        this.setState({
-          username: res.data.username,
-          description: res.data.description,
-          duration: res.data.duration,
-          date: new Date(res.data.date),
-        });
+        this.setState(
+          {
+            username: res.data.username,
+            description: res.data.description,
+            duration: Number(res.data.duration),
+            date: new Date(res.data.date),
+          },
+          console.log(res.data)
+        );
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(
-      this.state.username,
-      this.state.description,
-      this.state.duration,
-      this.state.date
-    );
 
     axios
       .get("http://localhost:5000/users/")
@@ -54,10 +51,12 @@ class EditExercise extends Component {
   }
 
   handleChange(e) {
+    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onChangeDate(date) {
+  onDateChange(date) {
+    console.log("date: ", date);
     this.setState({ date: date });
   }
   handleSubmit(e) {
@@ -65,7 +64,7 @@ class EditExercise extends Component {
     const exercise = {
       username: this.state.username,
       description: this.state.description,
-      duration: this.state.duration,
+      duration: Number(this.state.duration),
       date: this.state.date,
     };
     console.log(exercise);
@@ -74,8 +73,9 @@ class EditExercise extends Component {
         "http://localhost:5000/exercises/update/" + this.props.match.params.id,
         exercise
       )
-      .then((res) => console.log(res.data));
-    window.location = "/";
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+    // window.location = "/";
   }
 
   render() {
@@ -129,7 +129,7 @@ class EditExercise extends Component {
             <div>
               <DatePicker
                 selected={this.state.date}
-                onChange={this.onChangeDate}
+                onChange={this.onDateChange}
               />
             </div>
           </div>

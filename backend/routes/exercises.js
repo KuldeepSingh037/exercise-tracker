@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { findByIdAndUpdate } = require("../models/exercise.model");
 let Exercise = require("../models/exercise.model");
 
 router.route("/").get((req, res) => {
@@ -43,12 +44,21 @@ router.route("/:id").delete((req, res) => {
 });
 
 router.route("/update/:id").post((req, res) => {
+  console.log(
+    req.params.username,
+    req.params.description,
+    req.params.duration,
+    req.params.date
+  );
+
+  // try using findByIdAndUpdate
+
   Exercise.findById(req.params.id)
     .then((exercise) => {
       exercise.username = req.params.username;
       exercise.description = req.params.description;
-      exercise.duration = Number(req.params.duration);
-      exercise.date = Date.parse(req.params.date);
+      exercise.duration = req.params.duration;
+      exercise.date = req.params.date;
 
       exercise
         .save()
@@ -56,11 +66,11 @@ router.route("/update/:id").post((req, res) => {
           res.json("Exercise updated!");
         })
         .catch((err) => {
-          res.json("Error: " + err);
+          res.json("Error while saving: " + err);
         });
     })
     .catch((err) => {
-      res.json("Error: " + err);
+      res.json("Error while finding: " + err);
     });
 });
 
