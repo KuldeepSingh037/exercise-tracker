@@ -21,6 +21,7 @@ class CreateUser extends Component {
       username: this.state.username,
     };
     console.log(user);
+
     try {
       axios.post("http://localhost:5000/users/add", user).then((res) => {
         console.log(res.data);
@@ -32,8 +33,8 @@ class CreateUser extends Component {
     this.setState({
       username: "",
     });
-    // window.location = "/";
   }
+
   render() {
     return (
       <div>
