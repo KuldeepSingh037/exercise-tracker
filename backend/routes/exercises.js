@@ -44,21 +44,12 @@ router.route("/:id").delete((req, res) => {
 });
 
 router.route("/update/:id").post((req, res) => {
-  console.log(
-    req.params.username,
-    req.params.description,
-    req.params.duration,
-    req.params.date
-  );
-
-  // try using findByIdAndUpdate
-
   Exercise.findById(req.params.id)
     .then((exercise) => {
-      exercise.username = req.params.username;
-      exercise.description = req.params.description;
-      exercise.duration = req.params.duration;
-      exercise.date = req.params.date;
+      exercise.username = req.body.username;
+      exercise.description = req.body.description;
+      exercise.duration = Number(req.body.duration);
+      exercise.date = Date.parse(req.body.date);
 
       exercise
         .save()

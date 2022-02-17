@@ -9,8 +9,8 @@ class EditExercise extends Component {
     this.state = {
       username: "",
       description: "",
-      duration: new Number(),
-      date: new Date(),
+      duration: 0,
+      date: "",
       users: [],
     };
     this.handleChange = this.handleChange.bind(this);
@@ -56,18 +56,19 @@ class EditExercise extends Component {
   }
 
   onDateChange(date) {
-    console.log("date: ", date);
     this.setState({ date: date });
+    console.log("date: ", date);
   }
   handleSubmit(e) {
     e.preventDefault();
     const exercise = {
       username: this.state.username,
       description: this.state.description,
-      duration: Number(this.state.duration),
+      duration: this.state.duration,
       date: this.state.date,
     };
     console.log(exercise);
+    console.log(this.props.match.params.id);
     axios
       .post(
         "http://localhost:5000/exercises/update/" + this.props.match.params.id,
@@ -75,7 +76,7 @@ class EditExercise extends Component {
       )
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
-    // window.location = "/";
+    window.location = "/";
   }
 
   render() {
