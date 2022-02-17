@@ -1,3 +1,50 @@
+
+# Exercise Tracker Application
+Built this application as a practice for developing MERN apps.
+It is an updated version of the previously built To-Do Application.\
+It's main function is to keep track of the Exercises added by
+various users and display it on the home page.
+
+### Features
+All the exercise records can be seen on the home page and new
+exercise can be added at Create-exercise page.\
+The user can also edit the details for any exercise.\
+New user can join the application by using Create-user page.
+## Tech Stack
+
+
+**MongoDB** - document database.\
+**Express(.js)** - Node.js web framework.\
+**React(.js)** - a client-side JavaScript framework.\
+**Node(.js)** - the premier JavaScript web server.
+
+## Screenshots
+
+#### Home page
+![Project Screenshot](https://github.com/KuldeepSingh037/exercise-traker/blob/main/media/excer1.png)
+#### Adding new Exercise to Tracker
+![Project Screenshot](https://github.com/KuldeepSingh037/exercise-traker/blob/main/media/excer2.png)
+![Project Screenshot](https://github.com/KuldeepSingh037/exercise-traker/blob/main/media/excer3.png)
+## FAQ
+
+#### How can we improve this project ?
+We can provide a login and signup page for users. This will
+restrict them to track only their Exercises.
+
+
+
+## Feedback
+
+If you have any feedback, please reach out to me at 2019083@iiitdmj.ac.in.
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
