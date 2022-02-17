@@ -33,6 +33,8 @@ class CreateUser extends Component {
     this.setState({
       username: "",
     });
+
+    window.location="/create"
   }
 
   render() {
